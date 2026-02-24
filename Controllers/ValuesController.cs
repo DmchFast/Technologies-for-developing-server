@@ -61,6 +61,19 @@ public class ValuesController : ControllerBase
     [HttpPost("feedback")]
     public IActionResult Feedback(Feedback f)
     {
+        string[] forbiddenWords = { "крингк", "рофл", "вайб" };
+
+        foreach (var word in forbiddenWords)
+        {
+            if (f.Mes.Contains(word, StringComparison.OrdinalIgnoreCase))
+            {
+                return UnprocessableEntity(new
+                {
+                    error = $"Использование недопустимых слов"
+                });
+            }
+        }
+
         _feedbacks.Add(f);
         return Ok(new { message = $"Feedback received. Thank you, {f.Name}." });
     }
