@@ -39,4 +39,35 @@ public class ValuesController : ControllerBase
 
         return Ok(users);
     }
+
+    [HttpPost("user")]
+    public IActionResult User(UserAge user)
+    {
+        bool adult = user.Age > 18;
+
+        var result = new
+        {
+            user.Name,
+            user.Age,
+            is_adult = adult
+
+        };
+
+        return Ok(result);
+    }
+
+    private static List<Feedback> _feedbacks = new();
+
+    [HttpPost("feedback")]
+    public IActionResult Feedback(Feedback f)
+    {
+        _feedbacks.Add(f);
+        return Ok(new { message = $"Feedback received. Thank you, {f.Name}." });
+    }
+
+    [HttpGet("feedbacks")]
+    public IActionResult Feedbacks()
+    {
+        return Ok(_feedbacks);
+    }
 }
