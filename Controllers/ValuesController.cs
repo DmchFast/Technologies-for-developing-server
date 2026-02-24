@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using WebApplication_ASP.NET_Core.Models;
 
 namespace WebApplication_ASP.NET_Core.Controllers;
 
@@ -18,5 +19,24 @@ public class ValuesController : ControllerBase
     {
         var filePath = Path.Combine(Directory.GetCurrentDirectory(), "page", "index.html");
         return PhysicalFile(filePath, "text/html");
+    }
+
+    [HttpPost("calculate")]
+    public IActionResult Calculate(int num1, int num2)
+    {
+        var sum = num1 + num2;
+        return Ok(new { result = sum });
+    }
+
+    [HttpGet("users")]
+    public IActionResult Users()
+    {
+        var users = new User
+        {
+            Id = 1,
+            Name = "Дмитрий Чуваев"
+        };
+
+        return Ok(users);
     }
 }
