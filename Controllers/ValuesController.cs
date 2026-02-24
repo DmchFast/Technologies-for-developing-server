@@ -70,4 +70,11 @@ public class ValuesController : ControllerBase
     {
         return Ok(_feedbacks);
     }
+
+    [HttpDelete("feedbacks")]
+    public IActionResult ClearFeedbacks()
+    {
+        _feedbacks.Clear();
+        return Ok(new { message = "Все отзывы удалены" });
+    }
 }
